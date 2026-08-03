@@ -38,6 +38,58 @@
       document.getElementById("item").value = "";
       document.getElementById("price").value = "";
     }
-  </script>
+    <!DOCTYPE html>
+<html lang="ja">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>MoneyMate</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>💰MoneyMate</h1>
+
+<div class="card">
+
+<input type="date" id="date">
+
+<input type="text" id="item" placeholder="内容">
+
+<input type="number" id="price" placeholder="金額">
+
+<select id="category">
+
+<option>食費</option>
+<option>交通費</option>
+<option>趣味</option>
+<option>その他</option>
+
+</select>
+
+<button onclick="add()">
+
+追加
+
+</button>
+
+</div>
+
+<ul id="list"></ul>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
 </body>
 </html>
