@@ -9,11 +9,12 @@ function add(){
 
     const li=document.createElement("li");
 
-    li.innerHTML=
-    `<b>${item}</b><br>
-    ${category}　
-    ¥${Number(price).toLocaleString()}<br>
-    ${date}`;
+li.innerHTML = `
+<b>${item}</b><br>
+${category}<br>
+¥${Number(price).toLocaleString()}<br>
+${date}
+`;
 
     document.getElementById("list").appendChild(li);
 
