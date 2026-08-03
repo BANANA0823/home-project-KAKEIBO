@@ -3,10 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>家計簿アプリ</title>
+  <title>家計簿</title>
 </head>
 <body>
-  <h1>💰 家計簿アプリ</h1>
-  <p>自由研究で作成中！</p>
+  <h1>💰 家計簿</h1>
+
+  <p>日付</p>
+  <input type="date" id="date">
+
+  <p>内容</p>
+  <input type="text" id="item" placeholder="例：ジュース">
+
+  <p>金額</p>
+  <input type="number" id="price" placeholder="100">
+
+  <br><br>
+  <button onclick="add()">追加</button>
+
+  <h2>記録</h2>
+  <ul id="list"></ul>
+
+  <script>
+    function add() {
+      const date = document.getElementById("date").value;
+      const item = document.getElementById("item").value;
+      const price = document.getElementById("price").value;
+
+      if (!date || !item || !price) return;
+
+      const li = document.createElement("li");
+      li.textContent = `${date}　${item}　¥${price}`;
+      document.getElementById("list").appendChild(li);
+
+      document.getElementById("item").value = "";
+      document.getElementById("price").value = "";
+    }
+  </script>
 </body>
 </html>
