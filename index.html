@@ -1,62 +1,18 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>家計簿</title>
-</head>
-<body>
-  <h1>💰 家計簿</h1>
-
-  <p>日付</p>
-  <input type="date" id="date">
-
-  <p>内容</p>
-  <input type="text" id="item" placeholder="例：ジュース">
-
-  <p>金額</p>
-  <input type="number" id="price" placeholder="100">
-
-  <br><br>
-  <button onclick="add()">追加</button>
-
-  <h2>記録</h2>
-  <ul id="list"></ul>
-
-  <script>
-    function add() {
-      const date = document.getElementById("date").value;
-      const item = document.getElementById("item").value;
-      const price = document.getElementById("price").value;
-
-      if (!date || !item || !price) return;
-
-      const li = document.createElement("li");
-      li.textContent = `${date}　${item}　¥${price}`;
-      document.getElementById("list").appendChild(li);
-
-      document.getElementById("item").value = "";
-      document.getElementById("price").value = "";
-    }
-    <!DOCTYPE html>
-<html lang="ja">
-<head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width,initial-scale=1">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MoneyMate</title>
 
 <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
 
 <div class="container">
 
-<h1>💰MoneyMate</h1>
+<h1>💰 MoneyMate</h1>
 
 <div class="card">
 
@@ -67,21 +23,17 @@
 <input type="number" id="price" placeholder="金額">
 
 <select id="category">
-
 <option>食費</option>
 <option>交通費</option>
 <option>趣味</option>
 <option>その他</option>
-
 </select>
 
-<button onclick="add()">
-
-追加
-
-</button>
+<button onclick="add()">追加</button>
 
 </div>
+
+<h2>記録</h2>
 
 <ul id="list"></ul>
 
