@@ -1,3 +1,10 @@
+window.onload = function () {
+    const saved = localStorage.getItem("kakeibo");
+
+    if (saved) {
+        document.getElementById("list").innerHTML = saved;
+    }
+};
 function add() {
 
     const date = document.getElementById("date").value;
