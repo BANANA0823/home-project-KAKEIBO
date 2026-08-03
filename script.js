@@ -30,4 +30,11 @@ ${date}
 
     document.getElementById("item").value = "";
     document.getElementById("price").value = "";
+document.getElementById("item").value = "";
+document.getElementById("price").value = "";
+
+localStorage.setItem(
+    "kakeibo",
+    document.getElementById("list").innerHTML
+);
 }
