@@ -38,3 +38,18 @@ localStorage.setItem(
     document.getElementById("list").innerHTML
 );
 }
+function updateTotal() {
+    let total = 0;
+
+    document.querySelectorAll("#list li").forEach(li => {
+        const text = li.innerText;
+        const match = text.match(/¥([\d,]+)/);
+
+        if (match) {
+            total += Number(match[1].replace(/,/g, ""));
+        }
+    });
+
+    document.getElementById("total").textContent =
+        "¥" + total.toLocaleString();
+}
