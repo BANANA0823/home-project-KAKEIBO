@@ -37,6 +37,7 @@ localStorage.setItem(
     "kakeibo",
     document.getElementById("list").innerHTML
 );
+updateTotal();
 }
 function updateTotal() {
     let total = 0;
