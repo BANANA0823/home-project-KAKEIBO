@@ -4,6 +4,7 @@ window.onload = function () {
     if (saved) {
         document.getElementById("list").innerHTML = saved;
     }
+    updateTotal();
 };
 function add() {
 
