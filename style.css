@@ -58,7 +58,10 @@ button {
     font-size: 16px;
     border-radius: 10px;
 }
-
+input[type="date"]{
+    width:100%;
+    box-sizing:border-box;
+}
 input,
 select {
     border: 2px solid #ffe36e;
