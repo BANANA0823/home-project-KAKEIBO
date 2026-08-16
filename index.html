@@ -7,7 +7,36 @@
 
 <link rel="stylesheet" href="style.css">
 </head>
+<script>
+function bananaRain() {
+    for (let i = 0; i < 20; i++) {
+        const banana = document.createElement("div");
 
+        banana.textContent = "🍌";
+        banana.style.position = "fixed";
+        banana.style.left = Math.random() * 100 + "vw";
+        banana.style.top = "-50px";
+        banana.style.fontSize = (25 + Math.random() * 25) + "px";
+        banana.style.zIndex = "9999";
+        banana.style.pointerEvents = "none";
+
+        const duration = 1.5 + Math.random() * 2;
+
+        banana.style.transition = `top ${duration}s linear, transform ${duration}s linear`;
+        document.body.appendChild(banana);
+
+        setTimeout(() => {
+            banana.style.top = "110vh";
+            banana.style.transform =
+                `rotate(${Math.random() * 720 - 360}deg)`;
+        }, 50);
+
+        setTimeout(() => {
+            banana.remove();
+        }, duration * 1000 + 200);
+    }
+}
+</script>
 <body>
 
 <div class="container">
