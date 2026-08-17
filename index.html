@@ -3,75 +3,670 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MoneyMate</title>
 
-<link rel="stylesheet" href="style.css">
-</head>
-<script>
-function bananaRain() {
-    for (let i = 0; i < 20; i++) {
-        const banana = document.createElement("div");
+<title>🍌 バナナ家計簿</title>
 
-        banana.textContent = "🍌";
-        banana.style.position = "fixed";
-        banana.style.left = Math.random() * 100 + "vw";
-        banana.style.top = "-50px";
-        banana.style.fontSize = (25 + Math.random() * 25) + "px";
-        banana.style.zIndex = "9999";
-        banana.style.pointerEvents = "none";
+<style>
 
-        const duration = 1.5 + Math.random() * 2;
+/* =========================
+   全体
+========================= */
 
-        banana.style.transition = `top ${duration}s linear, transform ${duration}s linear`;
-        document.body.appendChild(banana);
+* {
+    box-sizing: border-box;
+}
 
-        setTimeout(() => {
-            banana.style.top = "110vh";
-            banana.style.transform =
-                `rotate(${Math.random() * 720 - 360}deg)`;
-        }, 50);
+body {
+    font-family: sans-serif;
+    background: #fff8d6;
+    margin: 0;
+    color: #333;
+    overflow-x: hidden;
+}
 
-        setTimeout(() => {
-            banana.remove();
-        }, duration * 1000 + 200);
+
+/* =========================
+   バナナ背景
+========================= */
+
+body::before {
+    content:
+        "🍌     🍌          🍌"
+        "\A"
+        "      🍌          🍌"
+        "\A"
+        "🍌          🍌"
+        "\A"
+        "          🍌       🍌"
+        "\A"
+        "   🍌           🍌"
+        "\A"
+        "🍌      🍌"
+        "\A"
+        "        🍌          🍌";
+
+    white-space: pre;
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    font-size: 38px;
+    line-height: 150px;
+
+    opacity: 0.18;
+
+    pointer-events: none;
+    z-index: -1;
+}
+
+
+/* =========================
+   全体コンテナ
+========================= */
+
+.container {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+
+/* =========================
+   タイトル
+========================= */
+
+h1 {
+    text-align: center;
+    color: #5b3a00;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+
+/* =========================
+   入力カード
+========================= */
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.12);
+}
+
+
+/* =========================
+   入力欄
+========================= */
+
+input,
+select,
+button {
+    width: 100%;
+    height: 42px;
+
+    padding: 10px;
+    margin-top: 10px;
+
+    box-sizing: border-box;
+
+    font-size: 16px;
+
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+
+/* 日付 */
+
+input[type="date"] {
+    width: 100% !important;
+    min-width: 0;
+    max-width: 100%;
+    height: 42px;
+
+    padding: 10px;
+
+    box-sizing: border-box;
+    display: block;
+}
+
+
+/* 入力欄の色 */
+
+input,
+select {
+    border: 2px solid #ffe36e;
+    background: #fffdf2;
+}
+
+
+/* =========================
+   ボタン
+========================= */
+
+button {
+    background: #69c34a;
+    color: white;
+
+    border: none;
+
+    font-weight: bold;
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #55ad38;
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+
+/* =========================
+   合計金額
+========================= */
+
+#total {
+    text-align: center;
+
+    font-size: 28px;
+    font-weight: bold;
+
+    color: #6b4500;
+
+    background: #ffe66d;
+
+    padding: 15px;
+
+    border-radius: 18px;
+
+    margin-top: 20px;
+}
+
+
+/* =========================
+   記録一覧
+========================= */
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background: white;
+
+    margin-top: 10px;
+    padding: 15px;
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 3px 8px rgba(0,0,0,0.1);
+}
+
+
+/* 見出し */
+
+h2 {
+    color: #5b3a00;
+}
+
+
+/* =========================
+   降ってくるバナナ
+========================= */
+
+.falling-banana {
+    position: fixed;
+
+    top: -60px;
+
+    pointer-events: none;
+
+    z-index: 9999;
+
+    user-select: none;
+
+    animation-name: bananaFall;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+
+/* バナナが落ちる */
+
+@keyframes bananaFall {
+
+    0% {
+        transform:
+            translateY(0)
+            rotate(0deg);
+    }
+
+    100% {
+        transform:
+            translateY(110vh)
+            rotate(720deg);
     }
 }
-</script>
+
+
+/* =========================
+   スマホ調整
+========================= */
+
+@media (max-width: 420px) {
+
+    .container {
+        margin: 10px auto;
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+}
+
+
+/* =========================
+   大成功時の演出
+========================= */
+
+.success-message {
+    position: fixed;
+
+    top: 45%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    background: #ffe66d;
+
+    color: #5b3a00;
+
+    padding: 15px 25px;
+
+    border-radius: 20px;
+
+    font-size: 24px;
+    font-weight: bold;
+
+    z-index: 10000;
+
+    animation: successPop 1.2s ease forwards;
+
+    pointer-events: none;
+}
+
+
+@keyframes successPop {
+
+    0% {
+        opacity: 0;
+        transform:
+            translate(-50%, -50%)
+            scale(0.5);
+    }
+
+    30% {
+        opacity: 1;
+        transform:
+            translate(-50%, -50%)
+            scale(1.2);
+    }
+
+    70% {
+        opacity: 1;
+        transform:
+            translate(-50%, -50%)
+            scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform:
+            translate(-50%, -50%)
+            scale(1.1);
+    }
+}
+
+</style>
+</head>
+
+
 <body>
+
 
 <div class="container">
 
-<h1>💰 MoneyMate</h1>
-<div class="total-card">
-    <p>今月の支出</p>
-    <h2 id="total">¥0</h2>
+    <h1>🍌 バナナ家計簿 🍌</h1>
+
+
+    <!-- 入力カード -->
+
+    <div class="card">
+
+        <h2>💰 お金を使った！</h2>
+
+
+        <!-- 日付 -->
+
+        <label>
+            日付
+        </label>
+
+        <input
+            type="date"
+            id="date"
+        >
+
+
+        <!-- 金額 -->
+
+        <label>
+            金額
+        </label>
+
+        <input
+            type="number"
+            id="amount"
+            placeholder="例：500"
+        >
+
+
+        <!-- 内容 -->
+
+        <label>
+            何に使った？
+        </label>
+
+        <input
+            type="text"
+            id="item"
+            placeholder="例：コンビニ"
+        >
+
+
+        <!-- 追加 -->
+
+        <button onclick="addExpense()">
+            🍌 追加する！
+        </button>
+
+    </div>
+
+
+    <!-- 合計 -->
+
+    <div id="total">
+        合計：0円
+    </div>
+
+
+    <!-- 記録 -->
+
+    <h2>📋 使った記録</h2>
+
+    <ul id="expenseList"></ul>
+
 </div>
-<div class="card">
 
-<input type="date" id="date">
 
-<input type="text" id="item" placeholder="内容">
 
-<input type="number" id="price" placeholder="金額">
+<script>
 
-<select id="category">
-<option>食費</option>
-<option>交通費</option>
-<option>趣味</option>
-<option>その他</option>
-</select>
+/* =========================
+   今日の日付をセット
+========================= */
 
-<button onclick="add()">追加</button>
+const dateInput = document.getElementById("date");
 
-</div>
+const today = new Date();
 
-<h2>記録</h2>
+const yyyy = today.getFullYear();
 
-<ul id="list"></ul>
+const mm = String(today.getMonth() + 1).padStart(2, "0");
 
-</div>
+const dd = String(today.getDate()).padStart(2, "0");
 
-<script src="script.js"></script>
+dateInput.value = `${yyyy}-${mm}-${dd}`;
+
+
+/* =========================
+   データ
+========================= */
+
+let expenses = [];
+
+let total = 0;
+
+
+/* =========================
+   支出を追加
+========================= */
+
+function addExpense() {
+
+    const date =
+        document.getElementById("date").value;
+
+    const amount =
+        Number(document.getElementById("amount").value);
+
+    const item =
+        document.getElementById("item").value;
+
+
+    /* 入力チェック */
+
+    if (!date) {
+
+        alert("日付を入れてね🍌");
+
+        return;
+    }
+
+
+    if (!amount || amount <= 0) {
+
+        alert("金額を入れてね🍌");
+
+        return;
+    }
+
+
+    if (!item.trim()) {
+
+        alert("何に使ったか入れてね🍌");
+
+        return;
+    }
+
+
+    /* データ追加 */
+
+    expenses.push({
+        date: date,
+        amount: amount,
+        item: item
+    });
+
+
+    /* 合計 */
+
+    total += amount;
+
+
+    /* 表示更新 */
+
+    updateDisplay();
+
+
+    /* 入力欄をクリア */
+
+    document.getElementById("amount").value = "";
+
+    document.getElementById("item").value = "";
+
+
+    /* 🍌 バナナを降らせる */
+
+    bananaRain();
+
+
+    /* メッセージ */
+
+    showSuccess();
+
+}
+
+
+/* =========================
+   表示更新
+========================= */
+
+function updateDisplay() {
+
+    const list =
+        document.getElementById("expenseList");
+
+
+    list.innerHTML = "";
+
+
+    /* 合計 */
+
+    document.getElementById("total").textContent =
+        "合計：" + total.toLocaleString() + "円";
+
+
+    /* 記録 */
+
+    expenses
+        .slice()
+        .reverse()
+        .forEach(function(expense) {
+
+            const li =
+                document.createElement("li");
+
+
+            li.innerHTML = `
+                <strong>${expense.item}</strong><br>
+                📅 ${expense.date}<br>
+                💰 ${expense.amount.toLocaleString()}円
+            `;
+
+
+            list.appendChild(li);
+
+        });
+
+}
+
+
+/* =========================
+   🍌 バナナ大量発生
+========================= */
+
+function bananaRain() {
+
+    const bananaCount = 25;
+
+
+    for (let i = 0; i < bananaCount; i++) {
+
+        const banana =
+            document.createElement("div");
+
+
+        banana.className =
+            "falling-banana";
+
+
+        banana.textContent = "🍌";
+
+
+        /* ランダムな位置 */
+
+        banana.style.left =
+            Math.random() * 100 + "vw";
+
+
+        /* ランダムな大きさ */
+
+        banana.style.fontSize =
+            (25 + Math.random() * 30) + "px";
+
+
+        /* ランダムな速度 */
+
+        banana.style.animationDuration =
+            (1.5 + Math.random() * 2) + "s";
+
+
+        /* 落ち始めるタイミング */
+
+        banana.style.animationDelay =
+            Math.random() * 0.5 + "s";
+
+
+        document.body.appendChild(banana);
+
+
+        /* 終わったら削除 */
+
+        setTimeout(function() {
+
+            banana.remove();
+
+        }, 4000);
+
+    }
+
+}
+
+
+/* =========================
+   🎉 成功メッセージ
+========================= */
+
+function showSuccess() {
+
+    const message =
+        document.createElement("div");
+
+
+    message.className =
+        "success-message";
+
+
+    message.textContent =
+        "🍌 追加したよ！ 🍌";
+
+
+    document.body.appendChild(message);
+
+
+    setTimeout(function() {
+
+        message.remove();
+
+    }, 1200);
+
+}
+
+</script>
+
 
 </body>
 </html>
