@@ -1,11 +1,7 @@
 /* =========================
    🍌 ばなな家計簿
-   ========================= */
+========================= */
 
-
-/* =========================
-   データ
-   ========================= */
 
 let records = [];
 
@@ -13,18 +9,27 @@ let combo = 0;
 
 
 /* =========================
-   保存データを読み込む
-   ========================= */
+   保存データ読み込み
+========================= */
 
 const savedRecords =
-    localStorage.getItem("bananaKakeiboRecords");
+    localStorage.getItem(
+        "bananaKakeiboRecords"
+    );
 
 
 if(savedRecords){
 
     try{
 
-        records = JSON.parse(savedRecords);
+        const data =
+            JSON.parse(savedRecords);
+
+        if(Array.isArray(data)){
+
+            records = data;
+
+        }
 
     }catch(error){
 
@@ -37,11 +42,12 @@ if(savedRecords){
 
 /* =========================
    今日の日付
-   ========================= */
+========================= */
 
 function getToday(){
 
-    const now = new Date();
+    const now =
+        new Date();
 
     const year =
         now.getFullYear();
@@ -56,39 +62,51 @@ function getToday(){
             now.getDate()
         ).padStart(2,"0");
 
-    return `${year}-${month}-${day}`;
-
-}
-
-
-document.getElementById("date").value =
-    getToday();
-
-
-/* =========================
-   保存
-   ========================= */
-
-function saveRecords(){
-
-    localStorage.setItem(
-        "bananaKakeiboRecords",
-        JSON.stringify(records)
+    return (
+        year +
+        "-" +
+        month +
+        "-" +
+        day
     );
 
 }
 
 
 /* =========================
-   合計金額
-   ========================= */
+   保存
+========================= */
+
+function saveRecords(){
+
+    localStorage.setItem(
+
+        "bananaKakeiboRecords",
+
+        JSON.stringify(records)
+
+    );
+
+}
+
+
+/* =========================
+   合計
+========================= */
 
 function getTotal(){
 
     return records.reduce(
-        (sum,record) =>
-            sum + record.price,
+
+        function(sum,record){
+
+            return sum +
+                Number(record.price || 0);
+
+        },
+
         0
+
     );
 
 }
@@ -96,7 +114,7 @@ function getTotal(){
 
 /* =========================
    画面更新
-   ========================= */
+========================= */
 
 function updateDisplay(){
 
@@ -104,40 +122,137 @@ function updateDisplay(){
         getTotal();
 
 
-    document.getElementById("total").textContent =
-        "合計：" +
-        total.toLocaleString() +
-        "円";
+    /* 合計 */
+
+    const totalElement =
+        document.getElementById(
+            "total"
+        );
 
 
-    document.getElementById("count").textContent =
-        "📖 記録：" +
-        records.length +
-        "件";
+    if(totalElement){
+
+        totalElement.textContent =
+            "合計：" +
+            total.toLocaleString() +
+            "円";
+
+    }
 
 
-    document.getElementById("combo").textContent =
-        "🔥 " +
-        combo +
-        " COMBO";
+    /* 件数 */
+
+    const count =
+        document.getElementById(
+            "count"
+        );
+
+
+    if(count){
+
+        count.textContent =
+            "📖 記録：" +
+            records.length +
+            "件";
+
+    }
+
+
+    /* コンボ */
+
+    const comboElement =
+        document.getElementById(
+            "combo"
+        );
+
+
+    if(comboElement){
+
+        comboElement.textContent =
+            "🔥 " +
+            combo +
+            " COMBO";
+
+    }
+
+
+    /* メーター */
+
+    const meterFill =
+        document.getElementById(
+            "meterFill"
+        );
+
+
+    const meterText =
+        document.getElementById(
+            "meterText"
+        );
+
+
+    if(meterFill){
+
+        const percent =
+            Math.min(
+                total / 5000 * 100,
+                100
+            );
+
+        meterFill.style.width =
+            percent + "%";
+
+    }
+
+
+    if(meterText){
+
+        if(total >= 5000){
+
+            meterText.textContent =
+                "🍌🍌🍌 バナナMAX！！ 🍌🍌🍌";
+
+        }
+        else{
+
+            meterText.textContent =
+                total.toLocaleString() +
+                "円使った！ 🍌";
+
+        }
+
+    }
 
 
     renderRecords();
+
+    updateCategories(total);
 
 }
 
 
 /* =========================
-   記録一覧を表示
-   ========================= */
+   記録一覧
+========================= */
 
 function renderRecords(){
 
     const list =
-        document.getElementById("recordList");
+        document.getElementById(
+            "recordList"
+        );
+
 
     const empty =
-        document.getElementById("emptyMessage");
+        document.getElementById(
+            "emptyMessage"
+        );
+
+
+    if(!list){
+
+        return;
+
+    }
 
 
     list.innerHTML = "";
@@ -145,76 +260,102 @@ function renderRecords(){
 
     if(records.length === 0){
 
-        empty.style.display =
-            "block";
+        if(empty){
+
+            empty.style.display =
+                "block";
+
+        }
 
         return;
 
     }
 
 
-    empty.style.display =
-        "none";
+    if(empty){
 
+        empty.style.display =
+            "none";
 
-    /*
-       新しい記録を上に表示
-    */
+    }
+
 
     records.forEach(
-        (record,index) => {
+
+        function(record,index){
 
             const li =
-                document.createElement("li");
+                document.createElement(
+                    "li"
+                );
 
 
             const date =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
+
 
             date.className =
                 "record-date";
 
+
             date.textContent =
-                "📅 " + record.date;
+                "📅 " +
+                record.date;
 
 
             const item =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
+
 
             item.className =
                 "record-item";
 
+
             item.textContent =
-                "💰 " + record.item;
+                "💰 " +
+                record.item;
 
 
             const price =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
+
 
             price.className =
                 "record-price";
 
+
             price.textContent =
                 "💴 " +
-                record.price.toLocaleString() +
+                Number(
+                    record.price
+                ).toLocaleString() +
                 "円";
 
 
-            /*
-               削除ボタン
-            */
+            /* 削除 */
 
             const deleteButton =
-                document.createElement("button");
+                document.createElement(
+                    "button"
+                );
+
+
+            deleteButton.type =
+                "button";
+
 
             deleteButton.className =
                 "delete-button";
 
-            deleteButton.textContent =
-                "🗑️";
 
-            deleteButton.title =
-                "この記録を削除";
+            deleteButton.textContent =
+                "🗑️ 削除";
 
 
             deleteButton.onclick =
@@ -231,11 +372,172 @@ function renderRecords(){
 
             li.appendChild(price);
 
-            li.appendChild(deleteButton);
+            li.appendChild(
+                deleteButton
+            );
+
 
             list.appendChild(li);
 
         }
+
+    );
+
+}
+
+
+/* =========================
+   📊 カテゴリー
+========================= */
+
+function updateCategories(total){
+
+    const categoryList =
+        document.getElementById(
+            "categoryList"
+        );
+
+
+    if(!categoryList){
+
+        return;
+
+    }
+
+
+    if(records.length === 0){
+
+        categoryList.textContent =
+            "まだ記録がないよ🍌";
+
+        return;
+
+    }
+
+
+    const categories = {};
+
+
+    records.forEach(
+
+        function(record){
+
+            if(
+                !categories[
+                    record.item
+                ]
+            ){
+
+                categories[
+                    record.item
+                ] = 0;
+
+            }
+
+
+            categories[
+                record.item
+            ] += Number(
+                record.price || 0
+            );
+
+        }
+
+    );
+
+
+    const sorted =
+        Object.entries(categories)
+        .sort(
+            function(a,b){
+
+                return b[1] - a[1];
+
+            }
+        );
+
+
+    categoryList.innerHTML = "";
+
+
+    sorted.forEach(
+
+        function(entry){
+
+            const name =
+                entry[0];
+
+            const money =
+                entry[1];
+
+
+            const percent =
+                total > 0
+
+                ? Math.round(
+                    money / total * 100
+                )
+
+                : 0;
+
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+
+            row.className =
+                "category-row";
+
+
+            const nameElement =
+                document.createElement(
+                    "span"
+                );
+
+
+            nameElement.className =
+                "category-name";
+
+
+            nameElement.textContent =
+                name;
+
+
+            const moneyElement =
+                document.createElement(
+                    "span"
+                );
+
+
+            moneyElement.className =
+                "category-money";
+
+
+            moneyElement.textContent =
+                money.toLocaleString() +
+                "円 (" +
+                percent +
+                "%)";
+
+
+            row.appendChild(
+                nameElement
+            );
+
+
+            row.appendChild(
+                moneyElement
+            );
+
+
+            categoryList.appendChild(
+                row
+            );
+
+        }
+
     );
 
 }
@@ -243,25 +545,31 @@ function renderRecords(){
 
 /* =========================
    💰 記録追加
-   ========================= */
+========================= */
 
 function addRecord(){
 
     const date =
-        document.getElementById("date").value;
+        document.getElementById(
+            "date"
+        ).value;
+
 
     const item =
-        document.getElementById("item").value;
+        document.getElementById(
+            "item"
+        ).value;
+
 
     const price =
         Number(
-            document.getElementById("price").value
+            document.getElementById(
+                "price"
+            ).value
         );
 
 
-    /* =====================
-       入力チェック
-       ===================== */
+    /* 入力チェック */
 
     if(!date){
 
@@ -296,11 +604,9 @@ function addRecord(){
     }
 
 
-    /* =====================
-       記録を作る
-       ===================== */
+    /* 記録 */
 
-    const newRecord = {
+    records.unshift({
 
         date:date,
 
@@ -310,69 +616,54 @@ function addRecord(){
 
         id:Date.now()
 
-    };
-
-
-    records.unshift(
-        newRecord
-    );
+    });
 
 
     saveRecords();
 
 
-    /* =====================
-       コンボ
-       ===================== */
-
     combo++;
 
-
-    /* =====================
-       画面更新
-       ===================== */
 
     updateDisplay();
 
 
-    /* =====================
-       🍌 バナナ
-       ===================== */
+    /* 🍌 バナナ */
 
     bananaRain();
 
 
-    /* =====================
-       🌈 派手な演出
-       ===================== */
+    /* 🎰 演出 */
 
     showCelebration();
 
 
-    /* =====================
-       合計をポンッ
-       ===================== */
+    /* 合計ポンッ */
 
     const totalBox =
-        document.getElementById("total");
+        document.getElementById(
+            "total"
+        );
 
 
-    totalBox.classList.remove(
-        "total-pop"
-    );
+    if(totalBox){
+
+        totalBox.classList.remove(
+            "total-pop"
+        );
 
 
-    void totalBox.offsetWidth;
+        void totalBox.offsetWidth;
 
 
-    totalBox.classList.add(
-        "total-pop"
-    );
+        totalBox.classList.add(
+            "total-pop"
+        );
+
+    }
 
 
-    /* =====================
-       入力をリセット
-       ===================== */
+    /* 入力リセット */
 
     document.getElementById(
         "price"
@@ -384,16 +675,12 @@ function addRecord(){
     ).value = "";
 
 
-    /*
-       日付はそのまま
-    */
-
 }
 
 
 /* =========================
    🗑️ 1件削除
-   ========================= */
+========================= */
 
 function deleteRecord(index){
 
@@ -410,11 +697,19 @@ function deleteRecord(index){
 
     const ok =
         confirm(
+
             "この記録を消す？\n\n" +
+
             record.item +
+
             "\n" +
-            record.price.toLocaleString() +
+
+            Number(
+                record.price
+            ).toLocaleString() +
+
             "円"
+
         );
 
 
@@ -431,14 +726,10 @@ function deleteRecord(index){
     );
 
 
-    saveRecords();
-
-
-    /*
-       削除したらコンボもリセット
-    */
-
     combo = 0;
+
+
+    saveRecords();
 
 
     updateDisplay();
@@ -448,7 +739,7 @@ function deleteRecord(index){
 
 /* =========================
    🧹 全削除
-   ========================= */
+========================= */
 
 function deleteAllRecords(){
 
@@ -465,8 +756,7 @@ function deleteAllRecords(){
 
     const ok =
         confirm(
-            "本当に全部の記録を消す？\n\n" +
-            "この操作は元に戻せません。"
+            "本当に全部の記録を消す？"
         );
 
 
@@ -478,7 +768,6 @@ function deleteAllRecords(){
 
 
     records = [];
-
 
     combo = 0;
 
@@ -492,14 +781,10 @@ function deleteAllRecords(){
 
 
 /* =========================
-   🍌 バナナを降らせる
-   ========================= */
+   🍌 バナナ降下
+========================= */
 
 function bananaRain(){
-
-    /*
-       バナナの数
-    */
 
     for(
         let i = 0;
@@ -508,7 +793,9 @@ function bananaRain(){
     ){
 
         const banana =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
 
         banana.className =
@@ -519,18 +806,10 @@ function bananaRain(){
             "🍌";
 
 
-        /*
-           横位置
-        */
-
         banana.style.left =
             Math.random() * 100 +
             "vw";
 
-
-        /*
-           大きさ
-        */
 
         banana.style.fontSize =
             (
@@ -540,10 +819,6 @@ function bananaRain(){
             "px";
 
 
-        /*
-           落下速度
-        */
-
         banana.style.animationDuration =
             (
                 1.2 +
@@ -551,10 +826,6 @@ function bananaRain(){
             ) +
             "s";
 
-
-        /*
-           開始タイミング
-        */
 
         banana.style.animationDelay =
             (
@@ -568,17 +839,16 @@ function bananaRain(){
         );
 
 
-        /*
-           終わったら消す
-        */
-
         setTimeout(
-            () => {
+
+            function(){
 
                 banana.remove();
 
             },
+
             4000
+
         );
 
     }
@@ -587,8 +857,8 @@ function bananaRain(){
 
 
 /* =========================
-   🌈 成功演出
-   ========================= */
+   🌈 パチンコ演出
+========================= */
 
 function showCelebration(){
 
@@ -604,20 +874,29 @@ function showCelebration(){
         );
 
 
-    /*
-       コンボによって文字を変更
-    */
+    if(!box || !text){
 
-    if(combo >= 5){
+        return;
+
+    }
+
+
+    if(combo >= 10){
 
         text.textContent =
-            "🔥🔥🔥 SUPER RECORD!! 🔥🔥🔥";
+            "🌈🍌 ULTRA BANANA!! 🍌🌈";
+
+    }
+    else if(combo >= 5){
+
+        text.textContent =
+            "🔥🍌 SUPER RECORD!! 🍌🔥";
 
     }
     else if(combo >= 3){
 
         text.textContent =
-            "🌈 GREAT RECORD!! 🌈";
+            "🌈🍌 GREAT RECORD!! 🍌🌈";
 
     }
     else{
@@ -633,10 +912,6 @@ function showCelebration(){
     );
 
 
-    /*
-       アニメーションを再起動
-    */
-
     void box.offsetWidth;
 
 
@@ -644,31 +919,141 @@ function showCelebration(){
         "show"
     );
 
+
+    setTimeout(
+
+        function(){
+
+            box.classList.remove(
+                "show"
+            );
+
+        },
+
+        1000
+
+    );
+
 }
 
 
 /* =========================
-   Enterキーでも追加
-   ========================= */
+   ボタン設定
+========================= */
 
-document.getElementById(
-    "price"
-).addEventListener(
-    "keydown",
-    function(event){
+function setupButtons(){
 
-        if(event.key === "Enter"){
+    const addButton =
+        document.getElementById(
+            "addButton"
+        );
 
-            addRecord();
 
-        }
+    if(addButton){
+
+        addButton.addEventListener(
+            "click",
+            addRecord
+        );
 
     }
-);
+
+
+    const deleteAllButton =
+        document.getElementById(
+            "deleteAllButton"
+        );
+
+
+    if(deleteAllButton){
+
+        deleteAllButton.addEventListener(
+            "click",
+            deleteAllRecords
+        );
+
+    }
+
+
+    const price =
+        document.getElementById(
+            "price"
+        );
+
+
+    if(price){
+
+        price.addEventListener(
+
+            "keydown",
+
+            function(event){
+
+                if(
+                    event.key === "Enter"
+                ){
+
+                    addRecord();
+
+                }
+
+            }
+
+        );
+
+    }
+
+}
 
 
 /* =========================
-   最初の画面表示
-   ========================= */
+   起動
+========================= */
 
-updateDisplay();
+function startKakeibo(){
+
+    const date =
+        document.getElementById(
+            "date"
+        );
+
+
+    if(date){
+
+        date.value =
+            getToday();
+
+    }
+
+
+    setupButtons();
+
+
+    updateDisplay();
+
+}
+
+
+/* =========================
+   開始
+========================= */
+
+if(
+    document.readyState ===
+    "loading"
+){
+
+    document.addEventListener(
+
+        "DOMContentLoaded",
+
+        startKakeibo
+
+    );
+
+}
+else{
+
+    startKakeibo();
+
+}
