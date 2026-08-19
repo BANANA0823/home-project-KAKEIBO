@@ -1173,21 +1173,29 @@ const bgmButton = document.getElementById("bgmButton");
 
 bgm.volume = 0.3;
 
-bgmButton.addEventListener("click", function(){
+bgmButton.addEventListener("click", async function(){
 
-    if(bgm.paused){
+    try {
 
-        bgm.play();
+        if (bgm.paused) {
 
-        bgmButton.textContent =
-            "⏸️ BGMを停止";
+            await bgm.play();
 
-    }else{
+            bgmButton.textContent = "⏸️ BGMを停止";
 
-        bgm.pause();
+        } else {
 
-        bgmButton.textContent =
-            "🎵 BGMを再生";
+            bgm.pause();
+
+            bgmButton.textContent = "🎵 BGMを再生";
+
+        }
+
+    } catch (error) {
+
+        console.log("BGM再生エラー:", error);
+
+        alert("BGMを再生できなかったよ🍌");
 
     }
 
