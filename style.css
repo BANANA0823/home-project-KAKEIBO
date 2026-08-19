@@ -1,104 +1,725 @@
-*{
-    box-sizing:border-box;
+/* ========================================
+   🍌 ばなな家計簿 CSS
+   ======================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+        "Hiragino Kaku Gothic ProN", "Hiragino Sans",
+        "Yu Gothic", sans-serif;
+
+    background: #fff8d6;
+    color: #333;
+
+    overflow-x: hidden;
 }
 
 
-body{
-    margin:0;
-    font-family:sans-serif;
-    background:#fff8d6;
-    color:#333;
-    overflow-x:hidden;
-}
-
-
-/* =========================
+/* ========================================
    🍌 背景
-   ========================= */
+   ======================================== */
 
-.banana-bg{
-    position:fixed;
-    inset:0;
+.banana-bg {
+    position: fixed;
 
-    z-index:-1;
+    top: 0;
+    left: 0;
 
-    font-size:38px;
-    line-height:150px;
+    width: 100%;
+    height: 100%;
 
-    opacity:0.12;
+    z-index: -1;
 
-    white-space:pre;
+    font-size: 42px;
+    line-height: 150px;
 
-    pointer-events:none;
+    opacity: 0.13;
 
-    user-select:none;
+    pointer-events: none;
+    user-select: none;
+
+    white-space: pre-wrap;
 }
 
 
-/* =========================
+/* ========================================
    全体
-   ========================= */
+   ======================================== */
 
-.container{
-    width:100%;
-    max-width:430px;
+.container {
+    width: 100%;
+    max-width: 430px;
 
-    margin:0 auto;
+    margin: 0 auto;
 
-    padding:20px;
+    padding: 20px;
 }
 
 
-/* =========================
-   タイトル
-   ========================= */
+/* ========================================
+   🍌 タイトル
+   ======================================== */
 
-h1{
-    text-align:center;
+h1 {
+    margin: 10px 0 20px;
 
-    color:#5b3a00;
+    text-align: center;
 
-    font-size:32px;
+    font-size: 32px;
 
-    margin:10px 0 5px;
+    color: #5b3a00;
 }
 
 
-.subtitle{
-    text-align:center;
+/* ========================================
+   カード
+   ======================================== */
 
-    color:#806c35;
+.card {
+    width: 100%;
 
-    margin-bottom:20px;
-}
+    background: #ffffff;
 
+    padding: 20px;
 
-/* =========================
-   入力カード
-   ========================= */
-
-.card{
-    background:white;
-
-    padding:20px;
-
-    border-radius:20px;
+    border-radius: 20px;
 
     box-shadow:
-        0 5px 15px rgba(0,0,0,0.12);
+        0 5px 15px rgba(0, 0, 0, 0.12);
 }
 
 
-/* =========================
+/* ========================================
    ラベル
-   ========================= */
+   ======================================== */
 
-label{
-    display:block;
+label {
+    display: block;
 
-    margin-top:12px;
+    margin-top: 12px;
 
-    font-weight:bold;
+    font-weight: bold;
 
-    color:#5b3a00;
+    color: #5b3a00;
+}
+
+
+/* ========================================
+   入力欄
+   ======================================== */
+
+input,
+select {
+    width: 100%;
+
+    height: 44px;
+
+    margin-top: 8px;
+
+    padding: 10px;
+
+    border: 2px solid #ffe36e;
+
+    border-radius: 9px;
+
+    background: #fffdf2;
+
+    color: #333;
+
+    font-size: 16px;
+
+    outline: none;
+}
+
+
+input:focus,
+select:focus {
+    border-color: #f5c400;
+
+    box-shadow:
+        0 0 0 3px rgba(255, 227, 110, 0.35);
+}
+
+
+/* 日付 */
+
+input[type="date"] {
+    width: 100%;
+
+    min-width: 0;
+    max-width: 100%;
+
+    height: 44px;
+}
+
+
+/* ========================================
+   🍌 記録ボタン
+   ======================================== */
+
+#addButton {
+    width: 100%;
+
+    height: 46px;
+
+    margin-top: 18px;
+
+    padding: 10px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #69c34a;
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.1s ease,
+        background 0.2s ease;
+}
+
+
+#addButton:hover {
+    background: #55ad38;
+}
+
+
+#addButton:active {
+    transform: scale(0.96);
+}
+
+
+/* ========================================
+   💰 合計
+   ======================================== */
+
+#total {
+    width: 100%;
+
+    margin-top: 20px;
+
+    padding: 16px;
+
+    border-radius: 18px;
+
+    text-align: center;
+
+    font-size: 28px;
+
+    font-weight: bold;
+
+    color: #6b4500;
+
+    background: #ffe66d;
+}
+
+
+/* 合計ポンッ */
+
+.total-pop {
+    animation: totalPop 0.5s ease;
+}
+
+
+@keyframes totalPop {
+
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.12);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+
+}
+
+
+/* ========================================
+   🍌 バナナメーター
+   ======================================== */
+
+.banana-meter {
+    width: 100%;
+
+    margin-top: 15px;
+
+    padding: 16px;
+
+    background: white;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.08);
+
+    text-align: center;
+}
+
+
+.meter-title {
+    margin-bottom: 10px;
+
+    font-weight: bold;
+
+    color: #5b3a00;
+}
+
+
+.meter-bar {
+    width: 100%;
+
+    height: 20px;
+
+    background: #eeeeee;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+
+#meterFill {
+    width: 0%;
+
+    height: 100%;
+
+    border-radius: 20px;
+
+    background: linear-gradient(
+        90deg,
+        #69c34a,
+        #ffe36e,
+        #ff9f43
+    );
+
+    transition: width 0.5s ease;
+}
+
+
+#meterText {
+    margin-top: 8px;
+
+    color: #806c35;
+
+    font-weight: bold;
+}
+
+
+/* ========================================
+   📊 ランキング
+   ======================================== */
+
+.summary-card {
+    width: 100%;
+
+    margin-top: 15px;
+
+    padding: 18px;
+
+    background: white;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+
+.summary-card h2 {
+    margin-top: 0;
+
+    color: #5b3a00;
+
+    font-size: 21px;
+}
+
+
+.category-row {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 10px 0;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+
+.category-row:last-child {
+    border-bottom: none;
+}
+
+
+.category-name {
+    font-weight: bold;
+}
+
+
+.category-money {
+    color: #6b4500;
+
+    font-weight: bold;
+}
+
+
+/* ========================================
+   📖 記録一覧
+   ======================================== */
+
+h2 {
+    color: #5b3a00;
+}
+
+
+#recordList {
+    list-style: none;
+
+    padding: 0;
+
+    margin: 0;
+}
+
+
+#recordList li {
+    position: relative;
+
+    width: 100%;
+
+    margin-top: 10px;
+
+    padding: 15px;
+
+    padding-right: 65px;
+
+    background: white;
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 3px 8px rgba(0, 0, 0, 0.1);
+
+    animation: recordAppear 0.3s ease;
+}
+
+
+@keyframes recordAppear {
+
+    from {
+        opacity: 0;
+
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform: translateY(0);
+    }
+
+}
+
+
+/* 日付 */
+
+.record-date {
+    font-size: 14px;
+
+    color: #777;
+}
+
+
+/* 何に使ったか */
+
+.record-item {
+    margin-top: 5px;
+
+    font-weight: bold;
+}
+
+
+/* 金額 */
+
+.record-price {
+    margin-top: 5px;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    color: #6b4500;
+}
+
+
+/* ========================================
+   🗑️ 削除ボタン
+   ======================================== */
+
+.delete-button {
+    position: absolute;
+
+    right: 10px;
+    top: 50%;
+
+    width: 42px;
+    height: 42px;
+
+    margin: 0;
+
+    padding: 0;
+
+    transform: translateY(-50%);
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #ffdddd;
+
+    color: #c44;
+
+    font-size: 18px;
+
+    cursor: pointer;
+}
+
+
+.delete-button:hover {
+    background: #ffcaca;
+}
+
+
+/* ========================================
+   🧹 全削除ボタン
+   ======================================== */
+
+#deleteAllButton {
+    width: 100%;
+
+    height: 44px;
+
+    margin-top: 15px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #e85d5d;
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+#deleteAllButton:hover {
+    background: #d94b4b;
+}
+
+
+/* ========================================
+   空っぽのとき
+   ======================================== */
+
+.empty {
+    width: 100%;
+
+    margin-top: 10px;
+
+    padding: 20px;
+
+    background: white;
+
+    border-radius: 15px;
+
+    text-align: center;
+
+    color: #806c35;
+}
+
+
+/* ========================================
+   🍌 降ってくるバナナ
+   ======================================== */
+
+.falling-banana {
+    position: fixed;
+
+    top: -70px;
+
+    z-index: 9999;
+
+    pointer-events: none;
+
+    font-size: 38px;
+
+    animation-name: bananaFall;
+
+    animation-timing-function: linear;
+
+    animation-fill-mode: forwards;
+}
+
+
+@keyframes bananaFall {
+
+    0% {
+        transform:
+            translateY(0)
+            rotate(0deg);
+
+        opacity: 1;
+    }
+
+    50% {
+        transform:
+            translateY(50vh)
+            rotate(180deg);
+    }
+
+    100% {
+        transform:
+            translateY(110vh)
+            rotate(360deg);
+
+        opacity: 0;
+    }
+
+}
+
+
+/* ========================================
+   🎰 記録成功演出
+   ======================================== */
+
+#effect {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 10000;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    pointer-events: none;
+
+    opacity: 0;
+}
+
+
+#effect.show {
+    animation: effectShow 1.4s ease forwards;
+}
+
+
+#effectText {
+    padding: 20px 30px;
+
+    border-radius: 25px;
+
+    background: rgba(255, 255, 255, 0.96);
+
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.25);
+
+    text-align: center;
+
+    font-size: 25px;
+
+    font-weight: bold;
+
+    animation: rainbowText 0.4s linear infinite;
+}
+
+
+@keyframes effectShow {
+
+    0% {
+        opacity: 0;
+
+        transform: scale(0.4);
+    }
+
+    20% {
+        opacity: 1;
+
+        transform: scale(1.15);
+    }
+
+    40% {
+        transform: scale(1);
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+
+        transform: scale(0.8);
+    }
+
+}
+
+
+@keyframes rainbowText {
+
+    0% {
+        filter: hue-rotate(0deg);
+    }
+
+    100% {
+        filter: hue-rotate(360deg);
+    }
+
+}
+
+
+/* ========================================
+   📱 スマホ
+   ======================================== */
+
+@media (max-width: 480px) {
+
+    .container {
+        padding: 15px;
+    }
+
+
+    h1 {
+        font-size: 28px;
+    }
+
+
+    #total {
+        font-size: 25px;
+    }
+
 }
