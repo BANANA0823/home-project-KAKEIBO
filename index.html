@@ -1,97 +1,288 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ばなな家計簿 🍌</title>
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>🍌 ばなな家計簿 🍌</title>
 
 <link rel="stylesheet" href="style.css">
+
 </head>
+
 
 <body>
 
+
 <!-- 🍌 背景 -->
-<div class="banana-bg">🍌</div>
 
-<div class="container">
+<div class="banana-bg">
 
-    <h1>🍌 ばなな家計簿 🍌</h1>
+🍌       🍌          🍌
 
-    <!-- 入力カード -->
-    <div class="card">
+      🍌       🍌
 
-        <label>📅 日付</label>
-        <input type="date" id="date">
+🍌          🍌       🍌
 
-        <label>💰 何に使った？</label>
-        <select id="item">
-            <option value="">選んでね</option>
-            <option value="🍙 ごはん">🍙 ごはん</option>
-            <option value="🍬 お菓子">🍬 お菓子</option>
-            <option value="🥤 飲み物">🥤 飲み物</option>
-            <option value="🎮 ゲーム">🎮 ゲーム</option>
-            <option value="🛍️ 買い物">🛍️ 買い物</option>
-            <option value="🚃 交通費">🚃 交通費</option>
-            <option value="🎬 遊び">🎬 遊び</option>
-            <option value="📱 サブスク">📱 サブスク</option>
-            <option value="🍌 その他">🍌 その他</option>
-        </select>
+    🍌     🍌
 
-        <label>💴 いくら使った？</label>
-        <input
-            type="number"
-            id="price"
-            placeholder="例：500"
-            min="1"
-        >
+🍌       🍌          🍌
 
-        <button id="addButton">
-            🍌 お金を使った！
-        </button>
+       🍌      🍌
 
-    </div>
-
-    <!-- 合計 -->
-    <div id="total">
-        合計：0円
-    </div>
-
-    <!-- 🍌 バナナゲージ -->
-    <div class="banana-meter">
-        <div class="meter-title">🍌 今月のバナナメーター</div>
-
-        <div class="meter-bar">
-            <div id="meterFill"></div>
-        </div>
-
-        <div id="meterText">
-            0円使った！
-        </div>
-    </div>
-
-    <!-- カテゴリー -->
-    <div class="summary-card">
-
-        <h2>📊 使ったものランキング</h2>
-
-        <div id="categoryList">
-            まだ記録がないよ🍌
-        </div>
-
-    </div>
-
-    <!-- 記録一覧 -->
-    <h2>📖 記録一覧</h2>
-
-    <ul id="recordList"></ul>
+🍌          🍌
 
 </div>
 
-<!-- 🎰 演出 -->
-<div id="effect"></div>
+
+
+<div class="container">
+
+
+<h1>
+🍌 ばなな家計簿 🍌
+</h1>
+
+
+
+<!-- =========================
+     💰 予算
+========================= -->
+
+<div class="budget-card">
+
+<h2>💰 今月の予算</h2>
+
+<div class="budget-input">
+
+<input
+    type="number"
+    id="budget"
+    placeholder="例：10000"
+    min="1"
+>
+
+<button id="budgetButton">
+予算を設定
+</button>
+
+</div>
+
+<div id="budgetMessage">
+まだ予算が設定されてないよ🍌
+</div>
+
+</div>
+
+
+
+<!-- =========================
+     🍌 メーター
+========================= -->
+
+<div class="banana-meter">
+
+<div class="meter-title">
+🍌 今月のバナナメーター
+</div>
+
+
+<div class="meter-bar">
+
+<div id="meterFill"></div>
+
+</div>
+
+
+<div id="meterText">
+0円 / 0円
+</div>
+
+</div>
+
+
+
+<!-- =========================
+     💸 記録
+========================= -->
+
+<div class="card">
+
+
+<label>
+📅 日付
+</label>
+
+<input
+    type="date"
+    id="date"
+>
+
+
+
+<label>
+💰 何に使った？
+</label>
+
+<select id="item">
+
+<option value="">
+選んでね
+</option>
+
+<option value="🍙 ごはん">
+🍙 ごはん
+</option>
+
+<option value="🍬 お菓子">
+🍬 お菓子
+</option>
+
+<option value="🥤 飲み物">
+🥤 飲み物
+</option>
+
+<option value="🎮 ゲーム">
+🎮 ゲーム
+</option>
+
+<option value="🛍️ 買い物">
+🛍️ 買い物
+</option>
+
+<option value="🚃 交通費">
+🚃 交通費
+</option>
+
+<option value="🎬 遊び">
+🎬 遊び
+</option>
+
+<option value="📱 サブスク">
+📱 サブスク
+</option>
+
+<option value="🍌 その他">
+🍌 その他
+</option>
+
+</select>
+
+
+
+<label>
+💴 いくら使った？
+</label>
+
+<input
+    type="number"
+    id="price"
+    placeholder="例：500"
+    min="1"
+>
+
+
+
+<button id="addButton">
+🍌 お金を使った！
+</button>
+
+
+</div>
+
+
+
+<!-- =========================
+     💰 合計
+========================= -->
+
+<div id="total">
+
+合計：0円
+
+</div>
+
+
+
+<!-- =========================
+     📊 月別ランキング
+========================= -->
+
+<div class="summary-card">
+
+<h2>
+📊 月別ランキング
+</h2>
+
+
+<label>
+📅 見たい月
+</label>
+
+
+<input
+    type="month"
+    id="rankingMonth"
+>
+
+
+<div id="categoryList">
+
+まだ記録がないよ🍌
+
+</div>
+
+</div>
+
+
+
+<!-- =========================
+     📖 記録
+========================= -->
+
+<h2>
+📖 記録一覧
+</h2>
+
+
+<ul id="recordList"></ul>
+
+
+
+<button id="deleteAllButton">
+
+🗑️ 全部の記録を消す
+
+</button>
+
+
+</div>
+
+
+
+<!-- =========================
+     🎰 演出
+========================= -->
+
+<div id="effect">
+
+<div id="effectText">
+
+🍌 RECORD SUCCESS!! 🍌
+
+</div>
+
+</div>
+
+
 
 <script src="script.js"></script>
 
+
 </body>
+
 </html>
