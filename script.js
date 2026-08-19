@@ -1167,3 +1167,28 @@ document.getElementById(
 
 
 updateDisplay();
+
+const bgm = document.getElementById("bgm");
+const bgmButton = document.getElementById("bgmButton");
+
+bgm.volume = 0.3;
+
+bgmButton.addEventListener("click", function(){
+
+    if(bgm.paused){
+
+        bgm.play();
+
+        bgmButton.textContent =
+            "⏸️ BGMを停止";
+
+    }else{
+
+        bgm.pause();
+
+        bgmButton.textContent =
+            "🎵 BGMを再生";
+
+    }
+
+});
